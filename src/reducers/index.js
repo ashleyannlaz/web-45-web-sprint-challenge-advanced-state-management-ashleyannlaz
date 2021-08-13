@@ -8,22 +8,44 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-    case(SMURF_FETCH):
+    case SMURF_FETCH:  // start smurf fetch
         return { ...state, 
-                isLoading: true };
-    case(SMURF_SUCCESS):
+                isLoading: true ,
+                }
+    case SMURF_SUCCESS:  // successful api fetch
+        return {
+            ...state,
+            smurfs: action.payload,
+            isLoading: false,
+        };
+    case SMURF_FAIL:   // api fetch fail
+        return {
+            ...state,
+            error: action.payload,
+            isLoading: false,
+        }
+    case ADD_SMURF:  // add smurf, name, nickname, etc
+        const newSmurf = {
+            ...action.payload,
+            id: Date.now(),
+        }
+        return {
+            ...state,
+            smurfs: [...state.smurfs, newSmurf]
+        }
+    case GET_ERROR:   //add error
+        return {
+            ...state,
+            error: action.payload,
+        }
         return state;
-    case(SMURF_FAIL):
-        return state;
-    case(ADD_SMURF):
-        return state;
-    case(GET_ERROR):
+    //default case
         default: return state;
     }
 }
 
-//**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
 export default reducer;
+//**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
 
 //Task List:
 //1. Adds the following state values into the initialState:
@@ -32,8 +54,8 @@ export default reducer;
 //  - a string indicating a possible error message
 
 //2. Add in the arguments needed to complete a standard reducer function.
-//3. Add in a reducer case to accomidate the start of a smurf fetch.
-//4. Add in a reducer case to accomidate the successful smurf api fetch.
-//5. Add in a reducer cases to accomidate the failed smurf api fetch.
-//6. Add in a reducer case to accomidate adding a smurf (including the name, nickname, position, summary and an internally generated id) into your smurf list.
+//3. Add in a reducer case to accommodate the start of a smurf fetch.
+//4. Add in a reducer case to accommodate the successful smurf api fetch.
+//5. Add in a reducer cases to accommodate the failed smurf api fetch.
+//6. Add in a reducer case to accommodate adding a smurf (including the name, nickname, position, summary and an internally generated id) into your smurf list.
 //7. Add in a reducer case that adds in a value to the error message.
